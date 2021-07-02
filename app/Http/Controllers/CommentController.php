@@ -4,82 +4,72 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get a listing of all comments.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
+        return Comment::all();
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created comment in storage.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
-        //
+        return Comment::create([
+            'slug' => $request->slug,
+            'message' => $request->message,
+            'name' => $request->name,
+            'email' => $request->email,
+            'ip' => $request->ip(),
+            'token' => Str::random(64),
+        ]);
     }
 
     /**
-     * Display the specified resource.
+     * Retrieve the comment for the given ID.
      *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
-    public function show(Comment $comment)
+    public function show(int $id)
     {
-        //
+        return Comment::findOrFail($id);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified comment in storage.
      *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Comment $comment
+     * @return Response
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        // TODO: Authentication Header (token)
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified comment from storage.
      *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Request $request, int $id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        if ($comment->token !== $request->token) abort(403);
+        $comment->delete();
     }
 }

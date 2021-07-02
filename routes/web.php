@@ -2,17 +2,15 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
-*/
+$router->get('comments', 'CommentController@index');
+$router->post('comments', 'CommentController@store');
+$router->options('comments', 'CommentController@info');
+$router->head('comments', 'CommentController@count');
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('comments/{id:\d+}', 'CommentController@show');
+$router->put('comments/{id:\d+}', 'CommentController@update');
+$router->patch('comments/{id:\d+}', 'CommentController@update');
+$router->delete('comments/{id:\d+}', 'CommentController@destroy');
+
+// TODO
+$router->get('comments/{slug}', 'CommentController@…');
