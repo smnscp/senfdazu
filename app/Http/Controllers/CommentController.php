@@ -3,72 +3,102 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Str;
 
 class CommentController extends Controller
 {
     /**
-     * Get a listing of all comments.
+     * Get a listing of all Comments of a Post.
      *
+     * @param string $slug The Post’s slug.
      * @return Response
      */
-    public function index()
+    public function index(string $slug)
     {
-        return Comment::all();
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return $post->comments()->get();
     }
 
     /**
-     * Store a newly created comment in storage.
+     * Store a newly created Comment in storage.
      *
      * @param Request $request
+     * @param string $slug The Post’s slug.
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, string $slug)
     {
-        return Comment::create([
-            'slug' => $request->slug,
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return $post->createComment([
             'message' => $request->message,
             'name' => $request->name,
             'email' => $request->email,
             'ip' => $request->ip(),
-            'token' => Str::random(64),
         ]);
     }
 
     /**
-     * Retrieve the comment for the given ID.
+     * Retrieve the Comment for the given slug + local ID.
      *
-     * @param int $id
+     * @param string $slug The Post’s slug.
+     * @param int $lid The Comment’s local ID.
      * @return Response
      */
-    public function show(int $id)
+    public function show(string $slug, int $lid)
     {
-        return Comment::findOrFail($id);
+        return Post::where('slug', $slug)->firstOrFail()
+            ->comments()->where('lid', $lid)->firstOrFail();
     }
 
     /**
-     * Update the specified comment in storage.
+     * Store a newly created Comment in storage, as reply to the specified one.
      *
      * @param Request $request
-     * @param Comment $comment
+     * @param string $slug The Post’s slug.
+     * @param int $lid The Comment’s local ID.
      * @return Response
      */
-    public function update(Request $request, Comment $comment)
+    public function reply(Request $request, string $slug, int $lid)
     {
-        // TODO: Authentication Header (token)
+        $parent = Post::where('slug', $slug)->firstOrFail()
+            ->comments()->where('lid', $lid)->firstOrFail();
+        return $parent->createChild([
+            'message' => $request->message,
+            'name' => $request->name,
+            'email' => $request->email,
+            'ip' => $request->ip(),
+        ]);
     }
 
     /**
-     * Remove the specified comment from storage.
+     * Update the specified Comment in storage.
      *
-     * @param int $id
+     * @param Request $request
+     * @param string $slug The Post’s slug.
+     * @param int $lid The Comment’s local ID.
      * @return Response
      */
-    public function destroy(Request $request, int $id)
+    public function update(Request $request, string $slug, int $lid)
     {
-        $comment = Comment::findOrFail($id);
+        // TODO: Authentication Header (token)
+        $comment = Post::where('slug', $slug)->firstOrFail()
+            ->comments()->where('lid', $lid)->firstOrFail();
+        // return $comment->update(…);
+    }
+
+    /**
+     * Remove the specified Comment from storage.
+     *
+     * @param string $slug The Post’s slug.
+     * @param int $lid The Comment’s local ID.
+     * @return Response
+     */
+    public function destroy(Request $request, string $slug, int $lid)
+    {
+        $comment = Post::where('slug', $slug)->firstOrFail()
+            ->comments()->where('lid', $lid)->firstOrFail();
         if ($comment->token !== $request->token) abort(403);
         $comment->delete();
     }

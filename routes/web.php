@@ -2,15 +2,11 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-$router->get('comments', 'CommentController@index');
-$router->post('comments', 'CommentController@store');
-$router->options('comments', 'CommentController@info');
-$router->head('comments', 'CommentController@count');
+$router->get('comments/{slug}', 'CommentController@index');
+$router->post('comments/{slug}', 'CommentController@store');
 
-$router->get('comments/{id:\d+}', 'CommentController@show');
-$router->put('comments/{id:\d+}', 'CommentController@update');
-$router->patch('comments/{id:\d+}', 'CommentController@update');
-$router->delete('comments/{id:\d+}', 'CommentController@destroy');
-
-// TODO
-$router->get('comments/{slug}', 'CommentController@…');
+$router->get('comments/{slug}/{lid:\d+}', 'CommentController@show');
+$router->post('comments/{slug}/{lid:\d+}', 'CommentController@reply');
+$router->put('comments/{slug}/{lid:\d+}', 'CommentController@update');
+$router->patch('comments/{slug}/{lid:\d+}', 'CommentController@update');
+$router->delete('comments/{slug}/{lid:\d+}', 'CommentController@destroy');
