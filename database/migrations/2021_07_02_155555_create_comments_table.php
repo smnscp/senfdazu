@@ -33,7 +33,6 @@ class CreateCommentsTable extends Migration
             $table->boolean('approved')->default(false);
             $table->timestamps();
 
-            $table->index('slug');
             $table->unique(['post_id', 'lid']);
         });
     }
