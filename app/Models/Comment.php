@@ -40,12 +40,22 @@ class Comment extends Model
         return $this->belongsTo(Comment::class, 'parent_id');
     }
 
+    public function ancestry()
+    {
+        return $this->parent()->with('ancestry');
+    }
+
     /**
      * Get the child comments.
      */
     public function children()
     {
         return $this->hasMany(Comment::class, 'parent_id');
+    }
+
+    public function progeny()
+    {
+        return $this->children()->with('progeny');
     }
 
 

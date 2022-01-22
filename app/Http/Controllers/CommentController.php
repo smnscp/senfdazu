@@ -18,7 +18,7 @@ class CommentController extends Controller
     public function index(string $slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        return $post->comments()->get();
+        return $post->commentForest()->get();
     }
 
     /**
