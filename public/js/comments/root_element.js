@@ -40,7 +40,7 @@ export default class RootElement extends HTMLElement {
       })
       .then((comments) => {
         const list = document.createElement("ol", { is: "comments-list" });
-        list.comments = comments;
+        list.data = comments;
         this.replaceChildren(list);
       })
       .catch((error) => {

@@ -7,10 +7,10 @@ export default class ListElement extends HTMLOListElement {
     super();
   }
 
-  connectedCallback() {
-    for (var comment of this.comments) {
+  set data(comments) {
+    for (var comment of comments) {
       const item = document.createElement("li", { is: "comments-item" });
-      item.comment = comment;
+      item.data = comment;
       this.appendChild(item);
     }
   }

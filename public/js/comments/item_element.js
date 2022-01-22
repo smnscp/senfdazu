@@ -1,27 +1,26 @@
 export default class ItemElement extends HTMLLIElement {
   constructor() {
     super();
-  }
-
-  connectedCallback() {
-    const date = new Date(this.comment.created_at);
-
     this.innerHTML = `
       <header>
-        <strong class="name-field">${this.htmlSafe(this.comment.name)}</strong>
-        <small class="date-field" title="${date}">${date.toDateString()}</small>
+        <strong class="name-field"></strong>
+        <small class="date-field"></small>
       </header>
-      <md-div class="message-field">
-        ${this.htmlSafe(this.comment.message)}
-      </md-div>
+      <md-div class="message-field"></md-div>
+      <ol is="comments-list"></ol>
     `;
-
-    const list = document.createElement("ol", { is: "comments-list" });
-    list.comments = this.comment.progeny;
-    this.appendChild(list);
   }
 
-  htmlSafe(message) {
-    return message.replaceAll("<", "&lt;");
+  set data(comment) {
+    this.querySelector(".name-field").innerText = comment.name;
+
+    const date = new Date(comment.created_at);
+    const dateField = this.querySelector(".date-field");
+    dateField.innerText = date.toDateString();
+    dateField.title = date.toString();
+
+    this.querySelector(".message-field").innerText = comment.message;
+
+    this.querySelector("[is=comments-list]").data = comment.progeny;
   }
 }
