@@ -11,14 +11,18 @@ class CommentController extends Controller
 {
     /**
      * Get a listing of all Comments of a Post.
+     * Normally the listing is hierarchical. With `?flat=true` it’s a flat list.
      *
+     * @param Request $request Might have param 'flat'.
      * @param string $slug The Post’s slug.
      * @return Response
      */
-    public function index(string $slug)
+    public function index(Request $request, string $slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        return $post->commentForest()->get();
+        return $request->get('flat') === 'true' ?
+            $post->comments()->get() :
+            $post->commentForest()->get();
     }
 
     /**
