@@ -19,10 +19,6 @@ export default class RootElement extends HTMLElement {
     this.setAttribute("src", val);
   }
 
-  get rootElement() {
-    return this;
-  }
-
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "src":

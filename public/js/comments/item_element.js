@@ -3,10 +3,6 @@ export default class ItemElement extends HTMLLIElement {
     super();
   }
 
-  get rootElement() {
-    return this.parentElement.parentElement.rootElement;
-  }
-
   connectedCallback() {
     const date = new Date(this.comment.created_at);
 
@@ -15,9 +11,9 @@ export default class ItemElement extends HTMLLIElement {
         <strong class="name-field">${this.htmlSafe(this.comment.name)}</strong>
         <small class="date-field" title="${date}">${date.toDateString()}</small>
       </header>
-      <div class="message-field">
-        ${this.processMessage(this.comment.message)}
-      </div>
+      <md-div class="message-field">
+        ${this.htmlSafe(this.comment.message)}
+      </md-div>
     `;
 
     const list = document.createElement("ol", { is: "comments-list" });
@@ -27,11 +23,5 @@ export default class ItemElement extends HTMLLIElement {
 
   htmlSafe(message) {
     return message.replaceAll("<", "&lt;");
-  }
-
-  processMessage(message) {
-    return this.rootElement?.md
-      ? this.rootElement.md.render(message)
-      : this.htmlSafe(message);
   }
 }
