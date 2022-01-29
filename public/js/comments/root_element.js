@@ -1,6 +1,6 @@
 import ListElement from "./list_element.js";
 
-customElements.define("comments-list", ListElement, { extends: "ol" });
+customElements.define("comments-list", ListElement);
 
 export default class RootElement extends HTMLElement {
   static get observedAttributes() {
@@ -39,7 +39,7 @@ export default class RootElement extends HTMLElement {
         return response.json();
       })
       .then((comments) => {
-        const list = document.createElement("ol", { is: "comments-list" });
+        const list = document.createElement("comments-list");
         list.data = comments;
         this.replaceChildren(list);
       })

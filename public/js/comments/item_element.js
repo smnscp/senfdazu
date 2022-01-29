@@ -1,26 +1,27 @@
-export default class ItemElement extends HTMLLIElement {
+export default class ItemElement extends HTMLElement {
   constructor() {
     super();
-    this.innerHTML = `
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = `
       <header>
-        <strong class="name-field"></strong>
-        <small class="date-field"></small>
+        <strong id="name-field"></strong>
+        <small id="date-field"></small>
       </header>
-      <md-div class="message-field"></md-div>
-      <ol is="comments-list"></ol>
+      <md-div id="message-field"></md-div>
+      <comments-list></comments-list>
     `;
   }
 
   set data(comment) {
-    this.querySelector(".name-field").innerText = comment.name;
+    this.shadowRoot.querySelector("#name-field").innerText = comment.name;
 
     const date = new Date(comment.created_at);
-    const dateField = this.querySelector(".date-field");
+    const dateField = this.shadowRoot.querySelector("#date-field");
     dateField.innerText = date.toDateString();
     dateField.title = date.toString();
 
-    this.querySelector(".message-field").innerText = comment.message;
+    this.shadowRoot.querySelector("#message-field").innerText = comment.message;
 
-    this.querySelector("[is=comments-list]").data = comment.progeny;
+    this.shadowRoot.querySelector("comments-list").data = comment.progeny;
   }
 }
