@@ -1,6 +1,4 @@
-import ListElement from "./list_element.js";
-
-customElements.define("comments-list", ListElement);
+import createList from "./list_element.js";
 
 export default class RootElement extends HTMLElement {
   static get observedAttributes() {
@@ -39,8 +37,7 @@ export default class RootElement extends HTMLElement {
         return response.json();
       })
       .then((comments) => {
-        const list = document.createElement("comments-list");
-        list.data = comments;
+        const list = createList(comments);
         this.replaceChildren(list);
       })
       .catch((error) => {
