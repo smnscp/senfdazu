@@ -1,3 +1,5 @@
+import "../simple/date_element.js";
+
 export default class ItemElement extends HTMLElement {
   constructor() {
     super();
@@ -5,7 +7,7 @@ export default class ItemElement extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <header>
         <strong id="name-field"></strong>
-        <small id="date-field"></small>
+        <small><simple-date id="date-field"></simple-date></small>
       </header>
       <md-div id="message-field"></md-div>
       <comments-list></comments-list>
@@ -15,10 +17,7 @@ export default class ItemElement extends HTMLElement {
   set data(comment) {
     this.shadowRoot.querySelector("#name-field").innerText = comment.name;
 
-    const date = new Date(comment.created_at);
-    const dateField = this.shadowRoot.querySelector("#date-field");
-    dateField.innerText = date.toDateString();
-    dateField.title = date.toString();
+    this.shadowRoot.querySelector("#date-field").innerText = comment.created_at;
 
     this.shadowRoot.querySelector("#message-field").innerText = comment.message;
 
