@@ -5,10 +5,6 @@ export default class RootElement extends HTMLElement {
     return ["src"];
   }
 
-  constructor() {
-    super();
-  }
-
   get src() {
     return this.getAttribute("src");
   }
