@@ -16,7 +16,9 @@ class RootElement extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "src":
-        this.load();
+        this.load().then((comments) => {
+          this.replaceChildren(createList(comments));
+        });
         break;
     }
   }
@@ -24,17 +26,13 @@ class RootElement extends HTMLElement {
   load() {
     this.innerHTML = "<p>loading …</p>";
 
-    fetch(this.src)
+    return fetch(this.src)
       .then((response) => {
         if (!response.ok) {
           this.innerHTML = "<p>Not available 🤷‍♂️</p>";
           throw new Error(`Response status was ${response.status}.`);
         }
         return response.json();
-      })
-      .then((comments) => {
-        const list = createList(comments);
-        this.replaceChildren(list);
       })
       .catch((error) => {
         console.error("Error fetching comments:", error.message);
