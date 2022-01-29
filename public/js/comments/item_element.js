@@ -75,17 +75,12 @@ export default class ItemElement extends HTMLElement {
           </form>
         </details>
       </footer>
-      <comments-list></comments-list>
     `;
   }
 
   set data(comment) {
     this.shadowRoot.querySelector("#name-field").innerText = comment.name;
-
     this.shadowRoot.querySelector("#date-field").innerText = comment.created_at;
-
     this.shadowRoot.querySelector("#message-field").innerText = comment.message;
-
-    this.shadowRoot.querySelector("comments-list").data = comment.progeny;
   }
 }
