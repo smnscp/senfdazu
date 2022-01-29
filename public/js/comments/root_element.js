@@ -1,4 +1,4 @@
-import createList from "./list_element.js";
+import createList from "./create_list.js";
 
 export default class RootElement extends HTMLElement {
   static get observedAttributes() {
