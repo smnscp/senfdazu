@@ -1,6 +1,4 @@
-import ItemElement from "./item_element.js";
-
-customElements.define("comments-item", ItemElement);
+import "./item_element.js";
 
 export default function createList(comments) {
   const ol = document.createElement("ol");

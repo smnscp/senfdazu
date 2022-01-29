@@ -1,6 +1,6 @@
 import createList from "./create_list.js";
 
-export default class RootElement extends HTMLElement {
+class RootElement extends HTMLElement {
   static get observedAttributes() {
     return ["src"];
   }
@@ -41,3 +41,5 @@ export default class RootElement extends HTMLElement {
       });
   }
 }
+
+customElements.define("comments-root", RootElement);

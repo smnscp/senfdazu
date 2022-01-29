@@ -1,6 +1,6 @@
 import "../simple/date_element.js";
 
-export default class ItemElement extends HTMLElement {
+class ItemElement extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -84,3 +84,5 @@ export default class ItemElement extends HTMLElement {
     this.shadowRoot.querySelector("#message-field").innerText = comment.message;
   }
 }
+
+customElements.define("comments-item", ItemElement);
