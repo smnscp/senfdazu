@@ -38,6 +38,14 @@ export default class ItemElement extends HTMLElement {
     `;
   }
 
+  get parent() {
+    return this.parentNode?.parentElement?.previousElementSibling;
+  }
+
+  get root() {
+    return this.parent?.root || this;
+  }
+
   set data(comment) {
     this.shadowRoot.querySelector("#name-field").innerText = comment.name;
     this.shadowRoot.querySelector("#date-field").innerText = comment.created_at;

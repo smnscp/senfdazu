@@ -14,6 +14,10 @@ class RootElement extends ItemElement {
     `;
   }
 
+  get parent() {
+    return null;
+  }
+
   get src() {
     return this.getAttribute("src");
   }
