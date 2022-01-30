@@ -2,7 +2,7 @@ import "../simple/date_element.js";
 import "./reply_toggle_element.js";
 import "./form_element.js";
 
-class ItemElement extends HTMLElement {
+export default class ItemElement extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -42,6 +42,21 @@ class ItemElement extends HTMLElement {
     this.shadowRoot.querySelector("#name-field").innerText = comment.name;
     this.shadowRoot.querySelector("#date-field").innerText = comment.created_at;
     this.shadowRoot.querySelector("#message-field").innerText = comment.message;
+  }
+
+  attachReplies(comments) {
+    if (!comments?.length) return;
+    const ol = document.createElement("ol");
+    ol.className = "sz-list";
+    this.parentNode.appendChild(ol);
+    for (var comment of comments) {
+      const li = document.createElement("li");
+      ol.appendChild(li);
+      const ci = document.createElement("sz-item");
+      li.appendChild(ci);
+      ci.data = comment;
+      ci.attachReplies(comment.progeny);
+    }
   }
 }
 

@@ -1,8 +1,17 @@
-import createList from "./create_list.js";
+import ItemElement from "./item_element.js";
 
-class RootElement extends HTMLElement {
+class RootElement extends ItemElement {
   static get observedAttributes() {
     return ["src"];
+  }
+
+  constructor() {
+    super();
+    this.shadowRoot.innerHTML = `
+      <simple-toggle title="Comment on this article …">
+        <sz-form></sz-form>
+      </simple-toggle>
+    `;
   }
 
   get src() {
@@ -17,7 +26,7 @@ class RootElement extends HTMLElement {
     switch (name) {
       case "src":
         this.load().then((comments) => {
-          this.replaceChildren(createList(comments));
+          this.attachReplies(comments);
         });
         break;
     }
@@ -32,6 +41,7 @@ class RootElement extends HTMLElement {
           this.innerHTML = "<p>Not available 🤷‍♂️</p>";
           throw new Error(`Response status was ${response.status}.`);
         }
+        this.innerHTML = "";
         return response.json();
       })
       .catch((error) => {
