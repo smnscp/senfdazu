@@ -31,9 +31,9 @@ class ItemElement extends HTMLElement {
       </header>
       <md-div id="message-field"></md-div>
       <footer>
-        <comments-reply-toggle title="Reply to this message …">
-          <comments-form></comments-form>
-        </comments-reply-toggle>
+        <sz-reply-toggle title="Reply to this message …">
+          <sz-form></sz-form>
+        </sz-reply-toggle>
       </footer>
     `;
   }
@@ -45,4 +45,4 @@ class ItemElement extends HTMLElement {
   }
 }
 
-customElements.define("comments-item", ItemElement);
+customElements.define("sz-item", ItemElement);

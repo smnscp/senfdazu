@@ -20,4 +20,4 @@ class FormElement extends HTMLElement {
   }
 }
 
-customElements.define("comments-form", FormElement);
+customElements.define("sz-form", FormElement);

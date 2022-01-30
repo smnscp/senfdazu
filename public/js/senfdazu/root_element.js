@@ -40,4 +40,4 @@ class RootElement extends HTMLElement {
   }
 }
 
-customElements.define("comments-root", RootElement);
+customElements.define("sz-root", RootElement);

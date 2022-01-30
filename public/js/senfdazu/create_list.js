@@ -2,10 +2,10 @@ import "./item_element.js";
 
 export default function createList(comments) {
   const ol = document.createElement("ol");
-  ol.className = "comments-list";
+  ol.className = "sz-list";
   for (var comment of comments) {
     const li = document.createElement("li");
-    const ci = document.createElement("comments-item");
+    const ci = document.createElement("sz-item");
     ci.data = comment;
     li.appendChild(ci);
     ol.appendChild(li);
