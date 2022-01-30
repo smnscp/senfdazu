@@ -1,4 +1,8 @@
 class FormElement extends HTMLElement {
+  static get observedAttributes() {
+    return ["action"];
+  }
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -13,10 +17,26 @@ class FormElement extends HTMLElement {
         }
       </style>
 
-      <form>
+      <form action="${this.action}" method="post">
         <textarea rows="5"></textarea>
       </form>
     `;
+  }
+
+  get action() {
+    return this.getAttribute("action");
+  }
+
+  set action(val) {
+    this.setAttribute("action", val);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case "action":
+        this.shadowRoot.querySelector("form").action = newValue;
+        break;
+    }
   }
 }
 

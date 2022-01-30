@@ -31,6 +31,7 @@ class RootElement extends ItemElement {
       case "src":
         this.load().then((comments) => {
           this.attachReplies(comments);
+          this.select("sz-form").action = newValue;
         });
         break;
     }

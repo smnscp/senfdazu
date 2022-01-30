@@ -47,9 +47,14 @@ export default class ItemElement extends HTMLElement {
   }
 
   set data(comment) {
-    this.shadowRoot.querySelector("#name-field").innerText = comment.name;
-    this.shadowRoot.querySelector("#date-field").innerText = comment.created_at;
-    this.shadowRoot.querySelector("#message-field").innerText = comment.message;
+    this.select("#name-field").innerText = comment.name;
+    this.select("#date-field").innerText = comment.created_at;
+    this.select("#message-field").innerText = comment.message;
+    this.select("sz-form").action = `${this.root.src}/${comment.lid}`;
+  }
+
+  select(selector) {
+    return this.shadowRoot.querySelector(selector);
   }
 
   attachReplies(comments) {
