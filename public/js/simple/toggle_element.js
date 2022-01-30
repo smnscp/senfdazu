@@ -53,6 +53,14 @@ export default class ToggleElement extends HTMLElement {
       </details>
     `;
   }
+
+  get open() {
+    return this.shadowRoot.querySelector("details").open;
+  }
+
+  set open(val) {
+    this.shadowRoot.querySelector("details").open = val;
+  }
 }
 
 customElements.define("simple-toggle", ToggleElement);

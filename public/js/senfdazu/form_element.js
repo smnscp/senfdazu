@@ -72,6 +72,8 @@ class FormElement extends HTMLElement {
           alert("Post failed 😖");
           throw new Error(`Response status was ${response.status}.`);
         }
+        form.reset();
+        this.parentElement.open = false;
         return response.json();
       })
       .catch((error) => {
