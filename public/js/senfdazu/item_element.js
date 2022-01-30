@@ -39,11 +39,20 @@ export default class ItemElement extends HTMLElement {
   }
 
   get parent() {
-    return this.parentNode?.parentElement?.previousElementSibling;
+    return this.closest(".sz-list").previousElementSibling;
   }
 
   get root() {
-    return this.parent?.root || this;
+    return this.closest("sz-root + .sz-list").previousElementSibling;
+  }
+
+  get repliesList() {
+    if (!this.nextElementSibling) {
+      const ol = document.createElement("ol");
+      ol.className = "sz-list";
+      this.parentNode.appendChild(ol);
+    }
+    return this.nextElementSibling;
   }
 
   set data(comment) {
@@ -59,17 +68,19 @@ export default class ItemElement extends HTMLElement {
 
   attachReplies(comments) {
     if (!comments?.length) return;
-    const ol = document.createElement("ol");
-    ol.className = "sz-list";
-    this.parentNode.appendChild(ol);
     for (var comment of comments) {
-      const li = document.createElement("li");
-      ol.appendChild(li);
-      const ci = document.createElement("sz-item");
-      li.appendChild(ci);
-      ci.data = comment;
-      ci.attachReplies(comment.progeny);
+      this.appendReply(comment);
     }
+  }
+
+  appendReply(comment) {
+    if (!comment) return;
+    const li = document.createElement("li");
+    this.repliesList.appendChild(li);
+    const ci = document.createElement("sz-item");
+    li.appendChild(ci);
+    ci.data = comment;
+    ci.attachReplies(comment.progeny);
   }
 }
 

@@ -43,6 +43,10 @@ class FormElement extends HTMLElement {
     this.setAttribute("action", val);
   }
 
+  get owner() {
+    return this.closest(":not(* > *)").parentNode.host;
+  }
+
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case "action":
@@ -50,7 +54,7 @@ class FormElement extends HTMLElement {
         form.action = newValue;
         form.onsubmit = (event) => {
           this.submit(event.target, newValue).then((comment) => {
-            // appendComment(comment);
+            if (comment) this.owner.appendReply(comment);
           });
           event.preventDefault();
         };
