@@ -40,7 +40,7 @@ class CommentController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'ip' => $request->ip(),
-        ]);
+        ])->makeVisible('token');
     }
 
     /**
@@ -73,7 +73,7 @@ class CommentController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'ip' => $request->ip(),
-        ]);
+        ])->makeVisible('token');
     }
 
     /**
