@@ -18,6 +18,7 @@ class Comment extends Model
         'token',
     ];
     protected $hidden = [
+        'email',
         'token',
         'ip',
         'approved',
