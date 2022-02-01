@@ -1,4 +1,5 @@
 import "../simple/date_element.js";
+import "./delete_button_element.js";
 import "./reply_toggle_element.js";
 import "./form_element.js";
 
@@ -23,16 +24,20 @@ export default class ItemElement extends HTMLElement {
           max-height: 23em;
           overflow: auto;
         }
+        sz-delete-button:not([action]) {
+          display: none;
+        }
       </style>
 
       <header>
         <strong id="name-field"></strong>
         <small><simple-date id="date-field"></simple-date></small>
+        <sz-delete-button id="delete-button">Delete comment</sz-delete-button>
       </header>
       <md-div id="message-field"></md-div>
       <footer>
         <sz-reply-toggle title="Reply to this message …">
-          <sz-form></sz-form>
+          <sz-form id="reply-form"></sz-form>
         </sz-reply-toggle>
       </footer>
     `;
@@ -59,7 +64,11 @@ export default class ItemElement extends HTMLElement {
     this.select("#name-field").innerText = comment.name;
     this.select("#date-field").innerText = comment.created_at;
     this.select("#message-field").innerText = comment.message;
-    this.select("sz-form").action = `${this.root.src}/${comment.lid}`;
+    const url = `${this.root.src}/${comment.lid}`;
+    this.select("#reply-form").action = url;
+    if (comment.token) {
+      this.select("#delete-button").action = `${url}?token=${comment.token}`;
+    }
   }
 
   select(selector) {
@@ -81,6 +90,10 @@ export default class ItemElement extends HTMLElement {
     li.appendChild(ci);
     ci.data = comment;
     ci.attachReplies(comment.progeny);
+  }
+
+  unlink() {
+    this.parentElement.parentElement.removeChild(this.parentElement);
   }
 }
 
