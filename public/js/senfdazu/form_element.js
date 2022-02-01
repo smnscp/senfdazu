@@ -51,7 +51,6 @@ class FormElement extends HTMLElement {
     switch (name) {
       case "action":
         const form = this.shadowRoot.querySelector("form");
-        form.action = newValue;
         form.onsubmit = (event) => {
           this.submit(event.target, newValue).then((comment) => {
             if (comment) this.owner.appendReply(comment);
