@@ -24,6 +24,19 @@ class Comment extends Model
         'approved',
         'post_id',
     ];
+    protected $appends = [
+        'email_hash'
+    ];
+
+    /**
+     * Get the email hash.
+     *
+     * @return string
+     */
+    public function getEmailHashAttribute()
+    {
+        return md5($this->email);
+    }
 
     /**
      * Get the parent comment.
