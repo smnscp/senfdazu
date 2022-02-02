@@ -35,7 +35,7 @@ class Comment extends Model
      */
     public function getEmailHashAttribute()
     {
-        return md5($this->email);
+        return hash('sha256', $this->email);
     }
 
     /**
