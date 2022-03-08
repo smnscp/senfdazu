@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -27,6 +28,13 @@ class Comment extends Model
     protected $appends = [
         'email_hash'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('approved', function (Builder $builder) {
+            $builder->where('approved', true);
+        });
+    }
 
     /**
      * Get the email hash.
