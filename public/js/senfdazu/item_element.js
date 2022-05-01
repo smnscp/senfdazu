@@ -69,9 +69,9 @@ export default class ItemElement extends HTMLElement {
 
   get repliesList() {
     if (!this.nextElementSibling) {
-      const ol = document.createElement("ol");
-      ol.className = "sz-list";
-      this.parentNode.appendChild(ol);
+      const replies = document.createElement("section");
+      replies.className = "sz-list";
+      this.parentNode.appendChild(replies);
     }
     return this.nextElementSibling;
   }
@@ -101,12 +101,12 @@ export default class ItemElement extends HTMLElement {
 
   appendReply(comment) {
     if (!comment) return;
-    const li = document.createElement("li");
-    this.repliesList.appendChild(li);
-    const ci = document.createElement("sz-item");
-    li.appendChild(ci);
-    ci.data = comment;
-    ci.attachReplies(comment.progeny);
+    const reply = document.createElement("article");
+    this.repliesList.appendChild(reply);
+    const item = document.createElement("sz-item");
+    reply.appendChild(item);
+    item.data = comment;
+    item.attachReplies(comment.progeny);
   }
 
   unlink() {
