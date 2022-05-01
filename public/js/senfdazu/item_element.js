@@ -27,6 +27,14 @@ export default class ItemElement extends HTMLElement {
         header, footer {
           margin: 0.5rem 0;
         }
+        header address {
+          display: inline;
+          font-weight: bold;
+          font-style: normal;
+        }
+        header time {
+          font-size: smaller;
+        }
         simple-avatar {
           position: absolute;
           inset-block-start: 2rem;
@@ -60,8 +68,8 @@ export default class ItemElement extends HTMLElement {
       </style>
 
       <header>
-        <strong id="name-field"></strong>
-        <small><simple-date id="date-field"></simple-date></small>
+        <address id="name-field"></address>
+        <simple-date id="date-field"></simple-date>
         <simple-avatar id="avatar-field"></simple-avatar>
         <sz-delete-button id="delete-button">Delete comment</sz-delete-button>
       </header>
