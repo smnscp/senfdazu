@@ -32,7 +32,7 @@ export default class ToggleElement extends HTMLElement {
           height: 1em;
         }
         details > summary:first-of-type svg * {
-          fill: var(--base07);
+          fill: var(--text-color);
         }
         details[open] > summary:first-of-type svg > :first-child {
           display: none;

@@ -17,7 +17,7 @@ export default class IconButtonElement extends HTMLElement {
           height: 1em;
         }
         button > svg * {
-          fill: var(--base07);
+          fill: var(--text-color);
         }
         .screen-reader-text {
           border: 0;

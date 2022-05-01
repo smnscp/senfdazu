@@ -11,17 +11,27 @@ export default class ItemElement extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         :host {
+          --text-color: black;
+          --bg-color: grey;
+          --figure-color: white;
+          --box-smoothing: 0.125rem;
+          --avatar-size: 2rem;
+
           display: block;
           position: relative;
+          color: var(--text-color);
+        }
+        section.sz-list {
+          padding-inline-start: calc(-0.5rem - var(--avatar-size));
         }
         header, footer {
           margin: 0.5rem 0;
         }
         simple-avatar {
           position: absolute;
-          left: -2.5em;
-          top: 2em;
-          width: 2em;
+          inset-block-start: 2rem;
+          inset-inline-start: calc(-0.5rem - var(--avatar-size));
+          width: var(--avatar-size);
         }
         simple-avatar svg {
           display: block;
@@ -36,8 +46,13 @@ export default class ItemElement extends HTMLElement {
           overflow: auto;
         }
         simple-avatar, md-div {
-          background: var(--base01);
-          border-radius: 0.125rem;
+          background: var(--bg-color);
+          border-radius: var(--box-smoothing);
+        }
+        md-div pre {
+          background: var(--figure-color);
+          border-radius: var(--box-smoothing);
+          padding: 0.5rem;
         }
         sz-delete-button:not([action]) {
           display: none;
