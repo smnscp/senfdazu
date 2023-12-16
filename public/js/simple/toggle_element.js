@@ -24,6 +24,9 @@ export default class ToggleElement extends HTMLElement {
           text-align: right;
           list-style-type: none;
         }
+        details > summary::-webkit-details-marker {
+          display: none;
+        }
         details[open] > summary:first-of-type {
           list-style-type: none;
         }
